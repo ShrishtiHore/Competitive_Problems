@@ -1,0 +1,72 @@
+'''
+You’re given the pointer to the head nodes of two sorted linked lists. The data in both lists will be sorted in ascending order. Change the next pointers to obtain a single, merged linked list which also has data in ascending order. Either head pointer given may be null meaning that the corresponding list is empty.
+
+Input Format
+
+You have to complete the SinglyLinkedListNode MergeLists(SinglyLinkedListNode headA, SinglyLinkedListNode headB) method which takes two arguments - the heads of the two sorted linked lists to merge. You should NOT read any input from stdin/console.
+
+The input is handled by the code in the editor and the format is as follows:
+
+The first line contains an integer , denoting the number of test cases.
+The format for each test case is as follows:
+
+The first line contains an integer , denoting the length of the first linked list.
+The next  lines contain an integer each, denoting the elements of the linked list.
+The next line contains an integer , denoting the length of the second linked list.
+The next  lines contain an integer each, denoting the elements of the second linked list.
+
+Constraints
+
+, where  is the  element of the list.
+Output Format
+
+Change the next pointer of individual nodes so that nodes from both lists are merged into a single list. Then return the head of this merged list. Do NOT print anything to stdout/console.
+
+The output is handled by the editor and the format is as follows:
+
+For each test case, print in a new line, the linked list after merging them separated by spaces.
+
+Sample Input
+
+1
+3
+1
+2
+3
+2
+3
+4
+Sample Output
+
+1 2 3 3 4 
+Explanation
+
+The first linked list is: 1 -> 2 -> 3 -> NULL
+
+The second linked list is: 3 -> 4 -> NULL
+
+Hence, the merged linked list is: 1 -> 2 -> 3 -> 3 -> 4 -> NULL
+
+'''
+def mergeLists(head1, head2):
+
+    if not head1 : return head2
+    if not head2 : return head1
+
+    # Starting here, both <head1> and <head2> are not None.
+    m = int( head1.data > head2.data ) # 0 if False; 1 if True
+    head = [head1, head2] ; head_merge = head[m]
+
+    # <precursor> denotes the last node of the merged linked list.
+    precursor, cursor = head_merge, head
+    cursor[m] = precursor.next
+
+    while precursor:
+        if not cursor[m]:
+            precursor.next = cursor[1-m] ; break
+        else:
+            m = int( cursor[0].data > cursor[1].data )
+            precursor.next, cursor[m] = cursor[m], cursor[m].next
+        precursor = precursor.next
+        
+    return head_merge
