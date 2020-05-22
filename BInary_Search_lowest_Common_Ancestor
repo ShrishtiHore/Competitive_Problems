@@ -1,0 +1,94 @@
+class Node:
+    def __init__(self, info): 
+        self.info = info  
+        self.left = None  
+        self.right = None 
+        self.level = None 
+
+    def __str__(self):
+        return str(self.info) 
+
+class BinarySearchTree:
+    def __init__(self): 
+        self.root = None
+
+    def create(self, val):  
+        if self.root == None:
+            self.root = Node(val)
+        else:
+            current = self.root
+         
+            while True:
+                if val < current.info:
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = Node(val)
+                        break
+                elif val > current.info:
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = Node(val)
+                        break
+                else:
+                    break
+
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+'''
+class Node:
+      def __init__(self,info): 
+          self.info = info  
+          self.left = None  
+          self.right = None 
+           
+
+       // this is a node of the tree , which contains info as data, left , right
+'''
+
+def lca(root, v1, v2):
+
+    current1=root
+    current2=root
+    route1=[]
+    route2=[]
+
+    while current1 or current2:
+        
+        if current1:
+            route1.append(current1)
+            if current1.info>v1:
+                current1=current1.left
+            elif current1.info<v1:
+                current1=current1.right
+            elif current1.info==v1:
+                 current1=None
+        if current2:
+            route2.append(current2)
+            if current2.info>v2:
+                current2=current2.left
+            elif current2.info<v2:
+                current2=current2.right
+            elif current2.info==v2:
+                 current2=None
+    
+    arr=route1 if len(route1)<len(route2) else route2
+
+    commonNode=None
+    for i in range(len(arr)):
+        if route1[i]==route2[i]:
+            commonNode=route1[i]
+    return commonNode
+
+tree = BinarySearchTree()
+t = int(input())
+
+arr = list(map(int, input().split()))
+
+for i in range(t):
+    tree.create(arr[i])
+
+v = list(map(int, input().split()))
+
+ans = lca(tree.root, v[0], v[1])
+print (ans.info)
