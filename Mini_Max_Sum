@@ -1,0 +1,5 @@
+a, b, c, d, e = input().strip().split(' ')
+num_arr = [int(a), int(b), int(c), int(d), int(e)]
+big_num = max(num_arr)
+small_num = min(num_arr)
+print(sum(num_arr)-big_num, sum(num_arr)-small_num)
